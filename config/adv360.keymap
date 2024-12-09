@@ -33,6 +33,7 @@
 #define LYR_NUMPAD 2
 #define LYR_FN 3
 #define LYR_MOD 4
+#define LYR_SYMBOL 5
 
 / {
     behaviors {
@@ -79,22 +80,22 @@
 
     default_layer {
       bindings = <
-//    ┌───────────┬─────────────┬─────────────┬─────────────┬─────────────┬───┬───────────────┐                                                ┌────────────┬───┬─────────────┬─────────────┬─────────────┬─────────────┬───────────┐
-//    │     =     │      1      │      2      │      3      │      4      │ 5 │ tog LYR_N@IVE │                                                │ mo LYR_MOD │ 6 │      7      │      8      │      9      │      0      │     -     │
-//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤                                                ├────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
-//    │    tab    │      Q      │      W      │      E      │      R      │ T │               │                                                │            │ Y │      U      │      I      │      O      │      P      │     \     │
-//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤      ┌──────┬──────┐       ┌──────┬──────┐     ├────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
-//    │    esc    │ &hml lgui A │ &hml lalt S │ &hml lctl D │ &hml lsft F │ G │               │      │ lctl │ lalt │       │ lgui │ rctl │     │            │ H │ &hmr rsft J │ &hmr lctl K │ &hmr lalt L │ &hmr lgui ; │     '     │
-//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┘      └──────┼──────┤       ├──────┼──────┘     └────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
-//    │   lsft    │      Z      │      X      │      C      │      V      │ B │                             │ home │       │ pgup │                         │ N │      M      │      ,      │      .      │      /      │   rsft    │
-//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┘               ┌──────┬──────┼──────┤       ├──────┼──────┬─────┐            └───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
-//    │ mo LYR_FN │      `      │    caps     │    left     │    rght     │                   │ bspc │ del  │ end  │       │ pgdn │ ent  │ spc │                │     up      │    down     │      [      │      ]      │ mo LYR_FN │
-//    └───────────┴─────────────┴─────────────┴─────────────┴─────────────┘                   └──────┴──────┴──────┘       └──────┴──────┴─────┘                └─────────────┴─────────────┴─────────────┴─────────────┴───────────┘
-  &kp EQUAL    &kp N1        &kp N2        &kp N3         &kp N4         &kp N5   &tog LYR_NATIVE                                                                                 &mo LYR_MOD   &kp N6   &kp N7         &kp N8         &kp N9        &kp N0           &kp MINUS
-  &kp TAB      &kp Q         &kp W         &kp E          &kp R          &kp T    &none                                                                                           &none         &kp Y    &kp U          &kp I          &kp O         &kp P            &kp BSLH
-  &kp ESC      &hml LGUI A   &hml LALT S   &hml LCTRL D   &hml LSHFT F   &kp G    &none                        &kp LCTRL   &kp LALT           &kp LGUI    &kp RCTRL               &none         &kp H    &hmr RSHFT J   &hmr LCTRL K   &hmr LALT L   &hmr LGUI SEMI   &kp SQT
-  &kp LSHFT    &kp Z         &kp X         &kp C          &kp V          &kp B                                             &kp HOME           &kp PG_UP                                         &kp N    &kp M          &kp COMMA      &kp DOT       &kp FSLH         &kp RSHFT
-  &mo LYR_FN   &kp GRAVE     &kp CAPS      &kp LEFT       &kp RIGHT                                 &kp BSPC   &kp DEL     &kp END            &kp PG_DN   &kp ENTER   &kp SPACE                          &kp UP         &kp DOWN       &kp LBKT      &kp RBKT         &mo LYR_FN
+//    ┌───────────┬─────────────┬─────────────┬─────────────┬─────────────┬───┬───────────────┐                                                              ┌────────────┬───┬─────────────┬─────────────┬─────────────┬─────────────┬───────────┐
+//    │     =     │      1      │      2      │      3      │      4      │ 5 │ tog LYR_N@IVE │                                                              │ mo LYR_MOD │ 6 │      7      │      8      │      9      │      0      │     -     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤                                                              ├────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
+//    │    tab    │      Q      │      W      │      E      │      R      │ T │               │                                                              │            │ Y │      U      │      I      │      O      │      P      │     \     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤                    ┌──────┬──────┐       ┌──────┬──────┐     ├────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
+//    │    esc    │ &hml lgui A │ &hml lalt S │ &hml lctl D │ &hml lsft F │ G │               │                    │ lctl │ lalt │       │ lgui │ rctl │     │            │ H │ &hmr rsft J │ &hmr lctl K │ &hmr lalt L │ &hmr lgui ; │     '     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┘                    └──────┼──────┤       ├──────┼──────┘     └────────────┼───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
+//    │   lsft    │      Z      │      X      │      C      │      V      │ B │                                           │ home │       │ pgup │                         │ N │      M      │      ,      │      .      │      /      │   rsft    │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┘               ┌────────────────────┬──────┼──────┤       ├──────┼──────┬─────┐            └───┼─────────────┼─────────────┼─────────────┼─────────────┼───────────┤
+//    │ mo LYR_FN │      `      │    caps     │    left     │    rght     │                   │ lt LYR_SYMBOL bspc │ del  │ end  │       │ pgdn │ ent  │ spc │                │     up      │    down     │      [      │      ]      │ mo LYR_FN │
+//    └───────────┴─────────────┴─────────────┴─────────────┴─────────────┘                   └────────────────────┴──────┴──────┘       └──────┴──────┴─────┘                └─────────────┴─────────────┴─────────────┴─────────────┴───────────┘
+  &kp EQUAL    &kp N1        &kp N2        &kp N3         &kp N4         &kp N5   &tog LYR_NATIVE                                                                                            &mo LYR_MOD   &kp N6   &kp N7         &kp N8         &kp N9        &kp N0           &kp MINUS
+  &kp TAB      &kp Q         &kp W         &kp E          &kp R          &kp T    &none                                                                                                      &none         &kp Y    &kp U          &kp I          &kp O         &kp P            &kp BSLH
+  &kp ESC      &hml LGUI A   &hml LALT S   &hml LCTRL D   &hml LSHFT F   &kp G    &none                                   &kp LCTRL   &kp LALT           &kp LGUI    &kp RCTRL               &none         &kp H    &hmr RSHFT J   &hmr LCTRL K   &hmr LALT L   &hmr LGUI SEMI   &kp SQT
+  &kp LSHFT    &kp Z         &kp X         &kp C          &kp V          &kp B                                                        &kp HOME           &kp PG_UP                                         &kp N    &kp M          &kp COMMA      &kp DOT       &kp FSLH         &kp RSHFT
+  &mo LYR_FN   &kp GRAVE     &kp CAPS      &kp LEFT       &kp RIGHT                                 &lt LYR_SYMBOL BSPC   &kp DEL     &kp END            &kp PG_DN   &kp ENTER   &kp SPACE                          &kp UP         &kp DOWN       &kp LBKT      &kp RBKT         &mo LYR_FN
       >;
     };
     native_layer {
@@ -175,6 +176,28 @@
   &none   &none          &none          &none          &none          &none          &none                 &none   &none           &bt BT_CLR   &none                          &rgb_ug RGB_MEFS_CMD 5   &none   &none        &none        &none   &none   &none
   &none   &none          &none          &none          &macro_ver     &none                                        &none           &none                                                                &none   &none        &none        &none   &none   &none
   &none   &none          &none          &none          &none                                       &none   &none   &none           &none        &bl BL_TOG   &rgb_ug RGB_TOG                                    &bl BL_INC   &bl BL_DEC   &none   &none   &none
+      >;
+    };
+
+    // copy from: https://www.reddit.com/r/ErgoMechKeyboards/comments/1cim5s9/comment/l2adh8g/
+    symbol_layer {
+      bindings = <
+//    ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┐                                           ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │                                           │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤                                           ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │  `  │  ~  │  #  │  &  │  |  │ ___ │                                           │ ___ │  ^  │  {  │  }  │  [  │  ]  │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤     ┌─────┬─────┐       ┌─────┬─────┐     ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │  !  │  _  │  :  │  =  │  $  │ ___ │     │ ___ │ ___ │       │ ___ │ ___ │     │ ___ │  @  │  (  │  )  │  _  │  ;  │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┘     └─────┼─────┤       ├─────┼─────┘     └─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │  %  │  ?  │  *  │  +  │  \  │                 │ ___ │       │ ___ │                 │  /  │  -  │  <  │  >  │  "  │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┘     ┌─────┬─────┼─────┤       ├─────┼─────┬─────┐     └─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │           │ ___ │ ___ │ ___ │       │ ___ │ ___ │ ___ │           │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    └─────┴─────┴─────┴─────┴─────┘           └─────┴─────┴─────┘       └─────┴─────┴─────┘           └─────┴─────┴─────┴─────┴─────┘
+  ___   ___           ___         ___            ___         ___          ___                                               ___   ___         ___         ___        ___         ___        ___
+  ___   &kp GRAVE     &kp TILDE   &kp HASH       &kp AMPS    &kp PIPE     ___                                               ___   &kp CARET   &kp LBRC    &kp RBRC   &kp LBKT    &kp RBKT   ___
+  ___   &kp EXCL      &kp UNDER   &kp COLON      &kp EQUAL   &kp DOLLAR   ___         ___   ___           ___   ___         ___   &kp AT      &kp LPAR    &kp RPAR   &kp UNDER   &kp SEMI   ___
+  ___   &kp PERCENT   &kp QMARK   &kp ASTERISK   &kp PLUS    &kp BSLH                       ___           ___                     &kp FSLH    &kp MINUS   &kp LT     &kp GT      &kp DQT    ___
+  ___   ___           ___         ___            ___                            ___   ___   ___           ___   ___   ___                     ___         ___        ___         ___        ___
       >;
     };
 
