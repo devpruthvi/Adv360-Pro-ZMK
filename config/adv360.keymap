@@ -54,6 +54,7 @@
           tapping-term-ms = <HM_TAPPING_TERM>;
           quick-tap-ms = <HM_QUICK_TAP>;
           require-prior-idle-ms = <HM_PRIOR_IDLE>;
+          #binding-cells = <2>;
           bindings = <&kp>, <&kp>;
           hold-trigger-key-positions = <KEYS_RIGHT THUMBS>;
           hold-trigger-on-release;
@@ -66,6 +67,7 @@
           tapping-term-ms = <HM_TAPPING_TERM>;
           quick-tap-ms = <HM_QUICK_TAP>;
           require-prior-idle-ms = <HM_PRIOR_IDLE>;
+          #binding-cells = <2>;
           bindings = <&kp>, <&kp>;
           hold-trigger-key-positions = <KEYS_LEFT THUMBS>;
           hold-trigger-on-release;
