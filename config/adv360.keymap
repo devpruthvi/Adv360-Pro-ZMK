@@ -22,17 +22,17 @@
 
 #define THUMBS THUMBS_LEFT THUMBS_RIGHT
 
-#define ___ &trans   
+#define ___ &trans
 
 #define HM_TAPPING_TERM 280
 #define HM_QUICK_TAP 175
 #define HM_PRIOR_IDLE 150
 
-#define LAYER_DEFAULT 0
-#define LAYER_NATIVE 1
-#define LAYER_NUMPAD 2
-#define LAYER_FN 3
-#define LAYER_MOD 4
+#define LYR_DEFAULT 0
+#define LYR_NATIVE 1
+#define LYR_NUMPAD 2
+#define LYR_FN 3
+#define LYR_MOD 4
 
 / {
     behaviors {
@@ -79,48 +79,113 @@
 
     default_layer {
       bindings = <
-        &kp EQUAL     &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 &tog LAYER_NATIVE                                                &mo LAYER_MOD &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB       &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none         &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC       &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none         &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT     &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                                   &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        &mo LAYER_FN  &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE                      &kp UP &kp DOWN  &kp LBKT &kp RBKT &mo LAYER_FN
+//    ┌───────────┬─────────────┬─────────────┬─────────────┬─────────────┬───┬───────────────┐                                                ┌────────────┬─────────────┬─────────────┬─────────┬─────────┬───┬───────────┐
+//    │     =     │      1      │      2      │      3      │      4      │ 5 │ tog LYR_N@IVE │                                                │ mo LYR_MOD │      6      │      7      │    8    │    9    │ 0 │     -     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤                                                ├────────────┼─────────────┼─────────────┼─────────┼─────────┼───┼───────────┤
+//    │    tab    │      Q      │      W      │      E      │      R      │ T │               │                                                │            │      Y      │      U      │    I    │    O    │ P │     \     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┤      ┌──────┬──────┐       ┌──────┬──────┐     ├────────────┼─────────────┼─────────────┼─────────┼─────────┼───┼───────────┤
+//    │    esc    │ &hml lgui A │ &hml lalt S │ &hml lctl D │ &hml lsft F │ G │               │      │ lctl │ lalt │       │ lgui │ rctl │     │            │ &hmr rsft H │ &hmr lctl J │ &lalt K │ &lgui L │ ; │     '     │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┼───────────────┘      └──────┼──────┤       ├──────┼──────┘     └────────────┼─────────────┼─────────────┼─────────┼─────────┼───┼───────────┤
+//    │   lsft    │      Z      │      X      │      C      │      V      │ B │                             │ home │       │ pgup │                         │      N      │      M      │    ,    │    .    │ / │   rsft    │
+//    ├───────────┼─────────────┼─────────────┼─────────────┼─────────────┼───┘               ┌──────┬──────┼──────┤       ├──────┼──────┬─────┐            └─────────────┼─────────────┼─────────┼─────────┼───┼───────────┤
+//    │ mo LYR_FN │      `      │    caps     │    left     │    rght     │                   │ bspc │ del  │ end  │       │ pgdn │ ent  │ spc │                          │     up      │  down   │    [    │ ] │ mo LYR_FN │
+//    └───────────┴─────────────┴─────────────┴─────────────┴─────────────┘                   └──────┴──────┴──────┘       └──────┴──────┴─────┘                          └─────────────┴─────────┴─────────┴───┴───────────┘
+  &kp EQUAL    &kp N1        &kp N2        &kp N3         &kp N4         &kp N5   &tog LYR_NATIVE                                                                                 &mo LYR_MOD   &kp N6         &kp N7         &kp N8      &kp N9     &kp N0     &kp MINUS
+  &kp TAB      &kp Q         &kp W         &kp E          &kp R          &kp T    &none                                                                                           &none         &kp Y          &kp U          &kp I       &kp O      &kp P      &kp BSLH
+  &kp ESC      &hml LGUI A   &hml LALT S   &hml LCTRL D   &hml LSHFT F   &kp G    &none                        &kp LCTRL   &kp LALT           &kp LGUI    &kp RCTRL               &none         &hmr RSHFT H   &hmr LCTRL J   &LALT K     &LGUI L    &kp SEMI   &kp SQT
+  &kp LSHFT    &kp Z         &kp X         &kp C          &kp V          &kp B                                             &kp HOME           &kp PG_UP                                         &kp N          &kp M          &kp COMMA   &kp DOT    &kp FSLH   &kp RSHFT
+  &mo LYR_FN   &kp GRAVE     &kp CAPS      &kp LEFT       &kp RIGHT                                 &kp BSPC   &kp DEL     &kp END            &kp PG_DN   &kp ENTER   &kp SPACE                                &kp UP         &kp DOWN    &kp LBKT   &kp RBKT   &mo LYR_FN
       >;
     };
     native_layer {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 ___                                                              ___   &kp N6 &kp N7 &kp N8    &kp N9   &kp N0   &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp U  &kp I     &kp O    &kp P    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp J  &kp K     &kp L    &kp SEMI &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp M  &kp COMMA &kp DOT  &kp FSLH &kp RSHFT
-        ___       &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp SPACE              &kp UP &kp DOWN  &kp LBKT &kp RBKT ___
+//    ┌──────┬───┬──────┬──────┬──────┬───┬─────┐                                                ┌─────┬───┬────┬──────┬───┬───┬──────┐
+//    │  =   │ 1 │  2   │  3   │  4   │ 5 │ ___ │                                                │ ___ │ 6 │ 7  │  8   │ 9 │ 0 │  -   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┤                                                ├─────┼───┼────┼──────┼───┼───┼──────┤
+//    │ tab  │ Q │  W   │  E   │  R   │ T │     │                                                │     │ Y │ U  │  I   │ O │ P │  \   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┤      ┌──────┬──────┐       ┌──────┬──────┐     ├─────┼───┼────┼──────┼───┼───┼──────┤
+//    │ esc  │ A │  S   │  D   │  F   │ G │     │      │ lctl │ lalt │       │ lgui │ rctl │     │     │ H │ J  │  K   │ L │ ; │  '   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┘      └──────┼──────┤       ├──────┼──────┘     └─────┼───┼────┼──────┼───┼───┼──────┤
+//    │ lsft │ Z │  X   │  C   │  V   │ B │                   │ home │       │ pgup │                  │ N │ M  │  ,   │ . │ / │ rsft │
+//    ├──────┼───┼──────┼──────┼──────┼───┘     ┌──────┬──────┼──────┤       ├──────┼──────┬─────┐     └───┼────┼──────┼───┼───┼──────┤
+//    │ ___  │ ` │ caps │ left │ rght │         │ bspc │ del  │ end  │       │ pgdn │ ent  │ spc │         │ up │ down │ [ │ ] │ ___  │
+//    └──────┴───┴──────┴──────┴──────┘         └──────┴──────┴──────┘       └──────┴──────┴─────┘         └────┴──────┴───┴───┴──────┘
+  &kp EQUAL   &kp N1      &kp N2     &kp N3     &kp N4      &kp N5   ___                                                                                   ___     &kp N6   &kp N7   &kp N8      &kp N9     &kp N0     &kp MINUS
+  &kp TAB     &kp Q       &kp W      &kp E      &kp R       &kp T    &none                                                                                 &none   &kp Y    &kp U    &kp I       &kp O      &kp P      &kp BSLH
+  &kp ESC     &kp A       &kp S      &kp D      &kp F       &kp G    &none              &kp LCTRL   &kp LALT           &kp LGUI    &kp RCTRL               &none   &kp H    &kp J    &kp K       &kp L      &kp SEMI   &kp SQT
+  &kp LSHFT   &kp Z       &kp X      &kp C      &kp V       &kp B                                   &kp HOME           &kp PG_UP                                   &kp N    &kp M    &kp COMMA   &kp DOT    &kp FSLH   &kp RSHFT
+  ___         &kp GRAVE   &kp CAPS   &kp LEFT   &kp RIGHT                    &kp BSPC   &kp DEL     &kp END            &kp PG_DN   &kp ENTER   &kp SPACE                    &kp UP   &kp DOWN    &kp LBKT   &kp RBKT   ___
       >;
     };
     keypad {
       bindings = <
-        &kp EQUAL &kp N1    &kp N2   &kp N3   &kp N4     &kp N5 ___                                                              ___   &kp N6 &kp KP_NUM &kp KP_EQUAL &kp KP_DIVIDE &kp KP_MULTIPLY &kp MINUS
-        &kp TAB   &kp Q     &kp W    &kp E    &kp R      &kp T  &none                                                            &none &kp Y  &kp KP_N7  &kp KP_N8    &kp KP_N9     &kp KP_MINUS    &kp BSLH
-        &kp ESC   &kp A     &kp S    &kp D    &kp F      &kp G  &none           &kp LCTRL &kp LALT &kp LGUI  &kp RCTRL           &none &kp H  &kp KP_N4  &kp KP_N5    &kp KP_N6     &kp KP_PLUS     &kp SQT
-        &kp LSHFT &kp Z     &kp X    &kp C    &kp V      &kp B                            &kp HOME &kp PG_UP                           &kp N  &kp KP_N1  &kp KP_N2    &kp KP_N3     &kp KP_ENTER    &kp RSHFT
-        ___       &kp GRAVE &kp CAPS &kp LEFT &kp RIGHT                &kp BSPC &kp DEL   &kp END  &kp PG_DN &kp ENTER &kp KP_N0              &kp UP     &kp DOWN     &kp KP_DOT    &kp RBKT        ___
+//    ┌──────┬───┬──────┬──────┬──────┬───┬─────┐                                              ┌─────┬───┬──────┬──────┬──────┬──────┬──────┐
+//    │  =   │ 1 │  2   │  3   │  4   │ 5 │ ___ │                                              │ ___ │ 6 │ nlck │ kp_= │ kp_/ │ kp_* │  -   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┤                                              ├─────┼───┼──────┼──────┼──────┼──────┼──────┤
+//    │ tab  │ Q │  W   │  E   │  R   │ T │     │                                              │     │ Y │  7   │  8   │  9   │ kp_- │  \   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┤      ┌──────┬──────┐       ┌──────┬──────┐   ├─────┼───┼──────┼──────┼──────┼──────┼──────┤
+//    │ esc  │ A │  S   │  D   │  F   │ G │     │      │ lctl │ lalt │       │ lgui │ rctl │   │     │ H │  4   │  5   │  6   │ kp_+ │  '   │
+//    ├──────┼───┼──────┼──────┼──────┼───┼─────┘      └──────┼──────┤       ├──────┼──────┘   └─────┼───┼──────┼──────┼──────┼──────┼──────┤
+//    │ lsft │ Z │  X   │  C   │  V   │ B │                   │ home │       │ pgup │                │ N │  1   │  2   │  3   │ ent  │ rsft │
+//    ├──────┼───┼──────┼──────┼──────┼───┘     ┌──────┬──────┼──────┤       ├──────┼──────┬───┐     └───┼──────┼──────┼──────┼──────┼──────┤
+//    │ ___  │ ` │ caps │ left │ rght │         │ bspc │ del  │ end  │       │ pgdn │ ent  │ 0 │         │  up  │ down │ kp_. │  ]   │ ___  │
+//    └──────┴───┴──────┴──────┴──────┘         └──────┴──────┴──────┘       └──────┴──────┴───┘         └──────┴──────┴──────┴──────┴──────┘
+  &kp EQUAL   &kp N1      &kp N2     &kp N3     &kp N4      &kp N5   ___                                                                                   ___     &kp N6   &kp KP_NUM   &kp KP_EQUAL   &kp KP_DIVIDE   &kp KP_MULTIPLY   &kp MINUS
+  &kp TAB     &kp Q       &kp W      &kp E      &kp R       &kp T    &none                                                                                 &none   &kp Y    &kp KP_N7    &kp KP_N8      &kp KP_N9       &kp KP_MINUS      &kp BSLH
+  &kp ESC     &kp A       &kp S      &kp D      &kp F       &kp G    &none              &kp LCTRL   &kp LALT           &kp LGUI    &kp RCTRL               &none   &kp H    &kp KP_N4    &kp KP_N5      &kp KP_N6       &kp KP_PLUS       &kp SQT
+  &kp LSHFT   &kp Z       &kp X      &kp C      &kp V       &kp B                                   &kp HOME           &kp PG_UP                                   &kp N    &kp KP_N1    &kp KP_N2      &kp KP_N3       &kp KP_ENTER      &kp RSHFT
+  ___         &kp GRAVE   &kp CAPS   &kp LEFT   &kp RIGHT                    &kp BSPC   &kp DEL     &kp END            &kp PG_DN   &kp ENTER   &kp KP_N0                    &kp UP       &kp DOWN       &kp KP_DOT      &kp RBKT          ___
       >;
     };
     fn {
       bindings = <
-        &kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &kp F6  ___                                             ___   &kp F7 &kp F8 &kp F9 &kp F10 &kp F11 &kp F12
-        ___    ___    ___    ___    ___    ___     &none                                           &none ___    ___    ___    ___     ___     ___   
-        ___    ___    ___    ___    ___    ___     &none        ___    ___    ___    ___           &none ___    ___    ___    ___     ___     ___   
-        ___    ___    ___    ___    ___    ___                         ___    ___                        ___    ___    ___    ___     ___     ___   
-        ___    ___    ___    ___    ___                  ___    ___    ___    ___    ___    ___                 ___    ___    ___     ___     ___   
+//    ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┐                                           ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┐
+//    │ f1  │ f2  │ f3  │ f4  │ f5  │ f6  │ ___ │                                           │ ___ │ f7  │ f8  │ f9  │ f10 │ f11 │ f12 │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤                                           ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │     │                                           │     │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤     ┌─────┬─────┐       ┌─────┬─────┐     ├─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │     │     │ ___ │ ___ │       │ ___ │ ___ │     │     │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┼─────┘     └─────┼─────┤       ├─────┼─────┘     └─────┼─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │                 │ ___ │       │ ___ │                 │ ___ │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    ├─────┼─────┼─────┼─────┼─────┼─────┘     ┌─────┬─────┼─────┤       ├─────┼─────┬─────┐     └─────┼─────┼─────┼─────┼─────┼─────┤
+//    │ ___ │ ___ │ ___ │ ___ │ ___ │           │ ___ │ ___ │ ___ │       │ ___ │ ___ │ ___ │           │ ___ │ ___ │ ___ │ ___ │ ___ │
+//    └─────┴─────┴─────┴─────┴─────┘           └─────┴─────┴─────┘       └─────┴─────┴─────┘           └─────┴─────┴─────┴─────┴─────┘
+  &kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &kp F6   ___                                                 ___     &kp F7   &kp F8   &kp F9   &kp F10   &kp F11   &kp F12
+  ___      ___      ___      ___      ___      ___      &none                                               &none   ___      ___      ___      ___       ___       ___
+  ___      ___      ___      ___      ___      ___      &none         ___   ___           ___   ___         &none   ___      ___      ___      ___       ___       ___
+  ___      ___      ___      ___      ___      ___                          ___           ___                       ___      ___      ___      ___       ___       ___
+  ___      ___      ___      ___      ___                       ___   ___   ___           ___   ___   ___                    ___      ___      ___       ___       ___
       >;
     };
     mod {
       bindings = <
-        &none &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &none                                                                     ___                    &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none        &none        &bootloader                                                               &bootloader            &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none        &none        &none                   &none &none &bt BT_CLR &none                      &rgb_ug RGB_MEFS_CMD 5 &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &macro_ver   &none                                      &none &none                                                        &none        &none        &none        &none &none &none
-        &none &none        &none        &none        &none                                       &none &none &none &none      &bl BL_TOG &rgb_ug RGB_TOG                                     &bl BL_INC   &bl BL_DEC   &none &none &none
+//    ┌─────┬──────────┬──────────┬──────────┬────────────┬──────────┬──────┐                                                      ┌──────────────────────┬─────┬─────────┬─────────┬─────┬─────┬─────┐
+//    │     │ bt_sel 0 │ bt_sel 1 │ bt_sel 2 │  bt_sel 3  │ bt_sel 4 │      │                                                      │         ___          │     │         │         │     │     │     │
+//    ├─────┼──────────┼──────────┼──────────┼────────────┼──────────┼──────┤                                                      ├──────────────────────┼─────┼─────────┼─────────┼─────┼─────┼─────┤
+//    │     │          │          │          │            │          │ boot │                                                      │         boot         │     │         │         │     │     │     │
+//    ├─────┼──────────┼──────────┼──────────┼────────────┼──────────┼──────┤     ┌─────┬─────┐       ┌────────┬─────────┐         ├──────────────────────┼─────┼─────────┼─────────┼─────┼─────┼─────┤
+//    │     │          │          │          │            │          │      │     │     │     │       │ bt_clr │         │         │ ug_ rguiB_MEFS_CMD 5 │     │         │         │     │     │     │
+//    ├─────┼──────────┼──────────┼──────────┼────────────┼──────────┼──────┘     └─────┼─────┤       ├────────┼─────────┘         └──────────────────────┼─────┼─────────┼─────────┼─────┼─────┼─────┤
+//    │     │          │          │          │ &macro_ver │          │                  │     │       │        │                                          │     │         │         │     │     │     │
+//    ├─────┼──────────┼──────────┼──────────┼────────────┼──────────┘      ┌─────┬─────┼─────┤       ├────────┼─────────┬─────────┐                      └─────┼─────────┼─────────┼─────┼─────┼─────┤
+//    │     │          │          │          │            │                 │     │     │     │       │        │ bl_ tog │ ug_ tog │                            │ bl_ br+ │ bl_ br- │     │     │     │
+//    └─────┴──────────┴──────────┴──────────┴────────────┘                 └─────┴─────┴─────┘       └────────┴─────────┴─────────┘                            └─────────┴─────────┴─────┴─────┴─────┘
+  &none   &bt BT_SEL 0   &bt BT_SEL 1   &bt BT_SEL 2   &bt BT_SEL 3   &bt BT_SEL 4   &none                                                                                     ___                      &none   &none        &none        &none   &none   &none
+  &none   &none          &none          &none          &none          &none          &bootloader                                                                               &bootloader              &none   &none        &none        &none   &none   &none
+  &none   &none          &none          &none          &none          &none          &none                 &none   &none           &bt BT_CLR   &none                          &rgb_ug RGB_MEFS_CMD 5   &none   &none        &none        &none   &none   &none
+  &none   &none          &none          &none          &macro_ver     &none                                        &none           &none                                                                &none   &none        &none        &none   &none   &none
+  &none   &none          &none          &none          &none                                       &none   &none   &none           &none        &bl BL_TOG   &rgb_ug RGB_TOG                                    &bl BL_INC   &bl BL_DEC   &none   &none   &none
       >;
     };
+
+    // placeholder_layer {
+    //   bindings = <
+    //     ___    ___    ___    ___    ___    ___     ___                                             ___   ___    ___    ___    ___     ___     ___
+    //     ___    ___    ___    ___    ___    ___     ___                                             ___   ___    ___    ___    ___     ___     ___
+    //     ___    ___    ___    ___    ___    ___     ___          ___    ___    ___    ___           ___   ___    ___    ___    ___     ___     ___
+    //     ___    ___    ___    ___    ___    ___                         ___    ___                        ___    ___    ___    ___     ___     ___
+    //     ___    ___    ___    ___    ___                  ___    ___    ___    ___    ___    ___                 ___    ___    ___     ___     ___
+    //   >;
+    // };
   };
 };
